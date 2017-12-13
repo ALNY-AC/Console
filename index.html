@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="dist/app/app.css" />
+    <title>首页</title>
+    <style>
+        a {
+            display: inline-block;
+            color: #31708f !important;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <div id="code_view">
+        <div class="code-box">
+
+        </div>
+    </div>
+
+    <!-- <li>
+        <span class="code-head">_></span>
+        <span class="code-edit" contenteditable="true"></span>
+    </li> -->
+
+    <div id="help" class="hide">
+        <h1>Hello Word</h1>
+    </div>
+
+    <script src="vendor/jquery/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="vendor/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+    <script src="dist/app/config.js" type="text/javascript" charset="utf-8"></script>
+    <script src="dist/app/code.js" type="text/javascript" charset="utf-8"></script>
+    <script src="dist/app/app.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+
+        list();
+        function list() {
+            //收藏列表
+            userCode.list = {
+                info: '收藏列表',
+                prefix: 'list',
+                fun: function (a) {
+
+
+                    var list = [
+                        {
+                            icon: '<i class="fa fa-github"></i>',
+                            title: 'GitHub',
+                            url: 'https://github.com'
+                        },
+                        {
+                            icon: '<i class="fa fa-font-awesome"></i>',
+                            title: 'Font Awesome',
+                            url: 'http://fontawesome.dashgame.com/'
+                        },
+                        {
+                            icon: '<img src="vue.png" style="width:15px">',
+                            title: 'vue',
+                            url: 'https://cn.vuejs.org/v2/guide/'
+                        },
+                        {
+                            icon: '<img src="boot.ico" style="width:15px">',
+                            title: 'bootstrap',
+                            url: 'http://v3.bootcss.com/css/'
+                        },
+                        {
+                            icon: '',
+                            title: 'runoob',
+                            url: 'http://www.runoob.com/'
+                        },
+                    ]
+
+                    var $div = $('<div/>');
+                    $div.append(`<div><i class='fa fa-cube fa-fw'></i> 收藏列表</div>`);
+
+                    for (let i = 0; i < list.length; i++) {
+                        const item = list[i];
+                        $div.append(`<div style='padding:10px 0'>${i + 1}.<span class='text-danger'>  ${(item.icon ? item.icon : '')}  ${item.title}</span>：<span ><a href='${item.url}' target="_black">${item.url}</a></span></div>`);
+                    }
+
+
+
+                    codeTool.print({
+                        content: $div
+                    });
+                    // if (a[0] == 'all') {
+                    // }
+
+                }
+            }
+
+        }
+
+        function init() {
+            userCode.game = {
+                info: 'game 测试',
+                prefix: 'game',
+                fun: function (a) {
+
+                    console.log(this.one);
+
+                    if (this.one == 'again') {
+                        //第二次输入
+
+                        var money = 9999;
+
+                        var str = `
+                    <p>您的姓名为：${a[0]}</p>
+                    <p>目前的麦穗：${money}<i class='glyphicon glyphicon-grain'></i></p>
+                    `;
+
+                        codeTool.print({
+                            content: str
+                        });
+                        codeTool.loca = '';
+                        this.one = null;
+                    } else {
+
+                        codeTool.loca = 'game';
+                        this.one = 'again';
+                        codeTool.print({
+                            content: '请输入您的姓名！'
+                        });
+
+                    }
+                }
+            };
+        }
+
+        codeTool.init(function () {
+            // codeTool.print();
+            // codeTool.paresCode('help');
+            codeTool.paresCode('info');
+            // codeTool.paresCode('list');
+
+        });
+
+    </script>
+</body>
+
+</html>

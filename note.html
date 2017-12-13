@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="dist/simditor/styles/simditor.css" />
+        <link rel="stylesheet" type="text/css" href="dist/note/note.css" />
+
+        <title>记事本</title>
+    </head>
+
+    <body class="hidden">
+
+        <div class="note-box">
+            <div class="note-left" id="tool_list">
+                <div class="tool-list">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </div>
+                <div v-for='todo in todos'>
+                    <div class="tool-list" :id='todo.id'>{{todo.name}}</div>
+                </div>
+
+            </div>
+
+            <div class="note-list" id="note_list">
+
+                <div class="list">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </div>
+                <div class="form-group">
+                    <input type="text" v-on:keyup.enter="addNote" v-model="nodeName" class="form-control" placeholder="add">
+                </div>
+
+                <div v-for='todo in todos'>
+                    <div class="list list-move" v-on:click="showNote" :id='todo.id'>{{todo.name}}
+                        <span class="remove glyphicon glyphicon-trash"></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="note-content">
+                <textarea id="editor" placeholder="Balabala" autofocus></textarea>
+            </div>
+
+        </div>
+
+        <div id="appConfig">
+            <input type="hidden" v-model="ing_note" />
+        </div>
+
+        <div class="text-box"></div>
+
+        <script src="vendor/jquery/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dist/model/Random.js" type="text/javascript" charset="utf-8"></script>
+        <script src="dist/local/local.js" type="text/javascript" charset="utf-8"></script>
+        <script src="vendor/jqueryUI/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="vendor/bootstrap/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="vendor/vue/vue.js" type="text/javascript" charset="utf-8"></script>
+        <!---->
+        <script type="text/javascript" src="dist/simditor/scripts/module.js"></script>
+        <script type="text/javascript" src="dist/simditor/scripts/hotkeys.js"></script>
+        <script type="text/javascript" src="dist/simditor/scripts/simditor.js"></script>
+        <!---->
+        <script type="text/javascript">
+            var editor = new Simditor({
+                textarea: $('#editor'),
+                pasteImage: true,
+                toolbar: [
+                    'title',
+                    'bold',
+                    'italic',
+                    'underline',
+                    'strikethrough',
+                    'fontScale',
+                    'color',
+                    'ol',
+                    'ul',
+                    'blockquote',
+                    'code',
+                    'table',
+                    'link',
+                    'image',
+                    'hr',
+                    'indent',
+                    'outdent',
+                    'alignment',
+                ]
+            });
+            var appConfig = new Vue({
+                el: '#appConfig',
+                data: {
+                    ing_note: ''
+                },
+
+            });
+            var toolApp = new Vue({
+                el: '#tool_list',
+                data: {
+                    todos: [{
+                        name: '工具1',
+                        id: 'note_1'
+                    }, {
+                        name: '工具2',
+                        id: 'note_2'
+                    }]
+                },
+
+            });
+
+            var litApp = new Vue({
+                el: '#note_list',
+                data: {
+                    nodeName: '',
+                    todos: [],
+                },
+                methods: {
+                    addNote: function() {
+                        /*
+                         * 添加记事本
+                         */
+
+                        this.todos.push({
+                            id: 'note_' + getRandom(5),
+                            name: this.nodeName
+                        })
+
+                        local.set('note_list', this.todos);
+
+                        this.nodeName = '';
+
+                    },
+                    showNote: function(event) {
+                        /*
+                         * 显示记事本
+                         */
+                        $('.note-list .list').removeClass('active');
+                        $(event.srcElement).addClass('active');
+                        appConfig.ing_note = $(event.srcElement).attr('id');
+
+                        var content = local.get(appConfig.ing_note);
+                        if(content != false) {
+                            editor.setValue(content['content']);
+                        }
+
+                    }
+                }
+            });
+
+            if(local.get('note_list') != false) {
+                litApp.todos = local.get('note_list');
+            }
+
+            $(function() {
+
+                $('body').removeClass('hidden');
+                editor.on('valuechanged', function() {
+
+                    if(editor.getValue().length <= 32) {
+                        $('.text-box').html(editor.getValue());
+                        for(var i = 0; i < litApp.todos.length; i++) {
+                            litApp.todos[i].name = $('.text-box').text();
+                        }
+                        local.set('note_list', litApp.todos);
+
+                    }
+
+                    local.set(appConfig.ing_note, {
+                        content: editor.getValue()
+                    });
+
+                });
+
+                $(document).on('click', '.remove', function() {
+
+                    var id = $(this).parent('.list-move').attr('id');
+
+                    for(var i = 0; i < litApp.todos.length; i++) {
+
+                        if(id === litApp.todos[i].id) {
+                            litApp.todos.splice(i, 1);
+                        }
+                    }
+
+                    local.set('note_list', litApp.todos);
+
+                    //移除内容
+                    local.remove(id);
+                    //                  $(this).parent('.list').remove();
+
+                });
+
+            });
+        </script>
+    </body>
+
+</html>

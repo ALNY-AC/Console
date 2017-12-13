@@ -1,0 +1,60 @@
+a {
+    display: block;
+    text-decoration: none;
+    &:link,
+    &:visited {
+        color: #14191e;
+        text-decoration: none;
+    }
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+body {
+    background-color: #000000;
+}
+
+#code_view {
+    color: #0f0;
+    padding: 10px;
+    font-size: 0;
+    .code-box {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        .code-item {
+            padding: 5px 0;
+            line-height: 1;
+            font-family: '微软雅黑';
+            position: relative;
+        }
+    }
+    .code-head {
+        vertical-align: top;
+        display: inline-block;
+        font-size: 14px;
+        padding: 0 10px;
+    }
+    .code-edit {
+        vertical-align: top;
+        display: inline-block;
+        font-size: 14px;
+        width: 50%;
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+#code {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #ff0000;
+    input {
+        display: block;
+        width: 100%;
+    }
+}

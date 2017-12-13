@@ -1,0 +1,76 @@
+.note-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #f9f9f9;
+  padding-left: 380px;
+  padding-right: 10px; }
+  .note-box .note-left {
+    position: fixed;
+    width: 70px;
+    height: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #333;
+    color: #fff;
+    overflow: auto;
+    -webkit-box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 3; }
+    .note-box .note-left .tool-list {
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+      text-align: center;
+      cursor: pointer;
+      padding: 20px 0; }
+      .note-box .note-left .tool-list:hover {
+        color: #fff;
+        background-color: #222; }
+  .note-box .note-list {
+    width: 300px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 70px;
+    background-color: #777;
+    overflow: auto;
+    z-index: 2;
+    border-right: solid 1px #666;
+    -webkit-box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5); }
+    .note-box .note-list .list {
+      position: relative;
+      cursor: pointer;
+      padding: 20px;
+      -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+      color: #eee;
+      border-bottom: solid 1px #666; }
+      .note-box .note-list .list .remove {
+        position: absolute;
+        right: 0;
+        padding: 23px;
+        display: none;
+        -webkit-transition: all 0.2s;
+        transition: all 0.2s;
+        border-radius: 50%;
+        color: #fff; }
+        .note-box .note-list .list .remove:hover {
+          background-color: #fff;
+          color: #000; }
+      .note-box .note-list .list.active {
+        color: #fff;
+        background-color: #666; }
+      .note-box .note-list .list:hover {
+        color: #fff;
+        background-color: #666; }
+        .note-box .note-list .list:hover .remove {
+          display: block; }
+  .note-box .note-content {
+    z-index: 1;
+    position: relative;
+    width: 100%;
+    color: #fff; }

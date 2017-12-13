@@ -1,0 +1,83 @@
+.note-box {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #f9f9f9;
+    padding-left: 380px;
+    padding-right: 10px;
+    .note-left {
+        position: fixed;
+        width: 70px;
+        height: 100%;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        background-color: #333;
+        color: #fff;
+        overflow: auto;
+        box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        z-index: 3;
+        .tool-list {
+            transition: all 0.2s;
+            text-align: center;
+            cursor: pointer;
+            padding: 20px 0;
+            &:hover {
+                color: #fff;
+                background-color: #222;
+            }
+        }
+    }
+    .note-list {
+        width: 300px;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 70px;
+        background-color: #777;
+        overflow: auto;
+        z-index: 2;
+        border-right: solid 1px #666;
+        box-shadow: 3px 0 10px rgba(0, 0, 0, 0.5);
+        .list {
+            position: relative;
+            cursor: pointer;
+            padding: 20px;
+            transition: all 0.2s;
+            color: #eee;
+            border-bottom: solid 1px #666;
+            .remove {
+                position: absolute;
+                right: 0;
+                padding: 23px;
+                display: none;
+                transition: all 0.2s;
+                border-radius: 50%;
+                color: #fff;
+                &:hover {
+                    background-color: #fff;
+                    color: #000;
+                }
+            }
+            &.active {
+                color: #fff;
+                background-color: #666;
+            }
+            &:hover {
+                color: #fff;
+                background-color: #666;
+                .remove {
+                    display: block;
+                }
+            }
+        }
+    }
+    .note-content {
+        z-index: 1;
+        position: relative;
+        width: 100%;
+        color: #fff;
+    }
+}
